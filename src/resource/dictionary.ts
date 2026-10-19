@@ -2030,11 +2030,27 @@ const germanExam: DictionaryResource[] = [
   },
 ]
 
+// 句子练习
+const sentences: DictionaryResource[] = [
+  {
+    id: 'english_sentences',
+    name: '常用英语句子',
+    description: '常用英语谚语与励志句子',
+    category: '句子练习',
+    tags: ['句子'],
+    url: 'english_sentences.json',
+    length: 59,
+    language: 'en',
+    languageCategory: 'en',
+  },
+]
+
 /**
  * Built-in dictionaries in an array.
  * Why arrays? Because it keeps the order across browsers.
  */
 export const dictionaries: DictionaryResource[] = [
+  ...sentences,
   ...chinaExam,
   ...internationalExam,
   ...childrenEnglish,

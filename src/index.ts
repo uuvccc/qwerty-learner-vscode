@@ -51,11 +51,12 @@ export function activate(context: vscode.ExtensionContext) {
     }
 
     const { range, text, rangeLength } = e.contentChanges[0]
-    if (!(text !== '' && text.length === 1)) {
+    // 忽略删除、换行与多段替换
+    if (text === '' || text.includes('\n') || rangeLength > 1) {
       return
     }
-    // 删除用户输入的字符
-    const newRange = new vscode.Range(range.start.line, range.start.character, range.end.line, range.end.character + 1)
+    // 删除用户输入的字符（自动闭合引号/括号时可能一次插入多个字符，需全部删除）
+    const newRange = new vscode.Range(range.start, new vscode.Position(range.start.line, range.start.character + text.length))
     const editAction = new vscode.WorkspaceEdit()
     editAction.delete(uri, newRange)
     vscode.workspace.applyEdit(editAction)
@@ -63,7 +64,10 @@ export function activate(context: vscode.ExtensionContext) {
       return
     }
     soundPlayer('click')
-    inputBar.text = pluginState.getCurrentInputBarContent(text)
+    // 多字符插入（如自动闭合的引号）只取第一个字符作为实际输入
+    inputBar.text = pluginState.getCurrentInputBarContent(text[0])
+    // 长句时目标文本随输入进度滚动
+    wordBar.text = pluginState.getInitialWordBarContent()
 
     const compareResult = pluginState.compareResult
     if (compareResult === -2) {

@@ -229,9 +229,28 @@ export default class PluginState {
   toggleTranslation() {
     this.translationVisible = !this.translationVisible
   }
+  // 状态栏最大显示长度，超出时以输入位置为中心滚动显示
+  static readonly MAX_DISPLAY_LENGTH = 50
+
+  private _windowText(full: string, cursorPos: number): string {
+    const max = PluginState.MAX_DISPLAY_LENGTH
+    if (full.length <= max) {
+      return full
+    }
+    let start = Math.max(0, cursorPos - 20)
+    if (start + max > full.length) {
+      start = full.length - max
+    }
+    const prefix = start > 0 ? '…' : ''
+    const end = start + max
+    const suffix = end < full.length ? '…' : ''
+    return prefix + full.slice(start, end) + suffix
+  }
+
   getInitialWordBarContent() {
     const name = this.hideDictName ? '' : this.dict.name
-    return `${name} chp.${this.chapter + 1}  ${this.order + 1}/${this.wordList.length}  ${this.wordVisibility ? this.currentWord.name : ''}`
+    const wordDisplay = this.wordVisibility ? this._windowText(this.currentWord.name, this.curInput.length) : ''
+    return `${name} chp.${this.chapter + 1}  ${this.order + 1}/${this.wordList.length}  ${wordDisplay}`
   }
 
   getInitialInputBarContent() {
@@ -240,7 +259,7 @@ export default class PluginState {
       content = ''
     } else {
       // 拼接占位符
-      content = this.placeholder.repeat(this.currentWord.name.length)
+      content = this._windowText(this.placeholder.repeat(this.currentWord.name.length), 0)
     }
     return content
   }
@@ -257,16 +276,15 @@ export default class PluginState {
 
   getCurrentInputBarContent(input: string) {
     let content = ''
+    this.curInput += input
     if (this.wordVisibility || this.placeholder === '') {
       // 没有使用placeholder，不需要特殊处理
-      this.curInput += input
       content = this.curInput
     } else {
       // 拼接占位符 && 获取当前已经键入的值进行比较
-      this.curInput += input
-      content = this.curInput + this.placeholder.repeat(this.currentWord.name.length - this.curInput.length)
+      content = this.curInput + this.placeholder.repeat(Math.max(this.currentWord.name.length - this.curInput.length, 0))
     }
-    return content
+    return this._windowText(content, this.curInput.length)
   }
 
   private _getCurrentWordPhonetic() {
