@@ -1,6 +1,6 @@
 {
-  "name": "qwerty-learner",
-  "displayName": "Qwerty Learner",
+  "name": "qwerty-learner-plus",
+  "displayName": "Qwerty Learner Plus",
   "description": "为 Coder 设计的单词记忆与英语肌肉记忆锻炼软件 摸🐟版",
   "version": "0.4.0",
   "publisher": "kaiyi",
@@ -20,13 +20,13 @@
     "Other"
   ],
   "bugs": {
-    "url": "https://github.com/Kaiyiwing/qwerty-learner-vscode/issues"
+    "url": "https://github.com/uuvccc/qwerty-learner-vscode/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Kaiyiwing/qwerty-learner-vscode/"
+    "url": "https://github.com/uuvccc/qwerty-learner-vscode/"
   },
-  "homepage": "https://github.com/Kaiyiwing/qwerty-learner-vscode",
+  "homepage": "https://github.com/uuvccc/qwerty-learner-vscode",
   "scripts": {
     "pretest": "yarn run compile && yarn run lint",
     "lint": "eslint src --ext ts",
@@ -39,61 +39,61 @@
   },
   "main": "./dist/index",
   "activationEvents": [
-    "onCommand:qwerty-learner.start",
-    "onCommand:qwerty-learner.changeChapter",
-    "onCommand:qwerty-learner.changeDict",
-    "onCommand:qwerty-learner.toggleChapterCycle"
+    "onCommand:qwerty-learner-plus.start",
+    "onCommand:qwerty-learner-plus.changeChapter",
+    "onCommand:qwerty-learner-plus.changeDict",
+    "onCommand:qwerty-learner-plus.toggleChapterCycle"
   ],
   "contributes": {
     "commands": [
       {
-        "command": "qwerty-learner.start",
-        "title": "Qwerty Learner Start/Pause"
+        "command": "qwerty-learner-plus.start",
+        "title": "Qwerty Learner Plus Start/Pause"
       },
       {
-        "command": "qwerty-learner.changeChapter",
-        "title": "Qwerty Learner Change Chapter"
+        "command": "qwerty-learner-plus.changeChapter",
+        "title": "Qwerty Learner Plus Change Chapter"
       },
       {
-        "command": "qwerty-learner.changeDict",
-        "title": "Qwerty Learner Change Dictionary"
+        "command": "qwerty-learner-plus.changeDict",
+        "title": "Qwerty Learner Plus Change Dictionary"
       },
       {
-        "command": "qwerty-learner.toggleWordVisibility",
-        "title": "Qwerty Learner Toggle Word Visibility"
+        "command": "qwerty-learner-plus.toggleWordVisibility",
+        "title": "Qwerty Learner Plus Toggle Word Visibility"
       },
       {
-        "command": "qwerty-learner.toggleReadOnlyMode",
-        "title": "Qwerty Learner Toggle Read Only Mode"
+        "command": "qwerty-learner-plus.toggleReadOnlyMode",
+        "title": "Qwerty Learner Plus Toggle Read Only Mode"
       },
       {
-        "command": "qwerty-learner.toggleChapterCycleMode",
-        "title": "Qwerty Learner Change chapter Cycle Mode"
+        "command": "qwerty-learner-plus.toggleChapterCycleMode",
+        "title": "Qwerty Learner Plus Change chapter Cycle Mode"
       }
     ],
     "keybindings": [
       {
-        "command": "qwerty-learner.start",
+        "command": "qwerty-learner-plus.start",
         "key": "shift+alt+q",
         "mac": "ctrl+shift+q",
         "when": "editorTextFocus"
       },
       {
-        "command": "qwerty-learner.toggleChapterCycleMode",
+        "command": "qwerty-learner-plus.toggleChapterCycleMode",
         "key": "shift+alt+c",
         "mac": "ctrl+shift+c",
         "when": "editorTextFocus"
       }
     ],
     "configuration": {
-      "title": "Qwerty Learner",
+      "title": "Qwerty Learner Plus",
       "properties": {
-        "qwerty-learner.keySound": {
+        "qwerty-learner-plus.keySound": {
           "type": "boolean",
           "default": true,
           "description": "是否开启键盘音"
         },
-        "qwerty-learner.phonetic": {
+        "qwerty-learner-plus.phonetic": {
           "type": "string",
           "enum": [
             "us",
@@ -103,36 +103,36 @@
           "default": "close",
           "description": "是否开启音标"
         },
-        "qwerty-learner.chapterLength": {
+        "qwerty-learner-plus.chapterLength": {
           "type": "integer",
           "default": 20,
           "minimum": 1,
           "maximum": 100,
           "description": "每个章节包含的单词数量"
         },
-        "qwerty-learner.wordExerciseTime": {
+        "qwerty-learner-plus.wordExerciseTime": {
           "type": "integer",
           "default": 1,
           "minimum": 1,
           "maximum": 100,
           "description": "每个单词的练习次数"
         },
-        "qwerty-learner.highlightWrongColor": {
+        "qwerty-learner-plus.highlightWrongColor": {
           "type": "string",
           "default": "#EE3D11",
           "description": "输入错误时单词的颜色"
         },
-        "qwerty-learner.highlightWrongDelay": {
+        "qwerty-learner-plus.highlightWrongDelay": {
           "type": "number",
           "default": 400,
           "description": "输入错误时清空输入的延迟时间"
         },
-        "qwerty-learner.readOnlyInterval": {
+        "qwerty-learner-plus.readOnlyInterval": {
           "type": "number",
           "default": 5000,
           "description": "只读模式中单词切换间隔时间(ms)"
         },
-        "qwerty-learner.voiceType": {
+        "qwerty-learner-plus.voiceType": {
           "type": "string",
           "enum": [
             "us",
@@ -142,7 +142,7 @@
           "default": "us",
           "description": "是否开启发音"
         },
-        "qwerty-learner.placeholder": {
+        "qwerty-learner-plus.placeholder": {
           "type": "string",
           "enum": [
             "_",
@@ -153,7 +153,7 @@
           "default": "-",
           "description": "未输入时的占位符，空表示无占位符（仅当wordVisibility === true时生效）"
         },
-        "qwerty-learner.random": {
+        "qwerty-learner-plus.random": {
           "type": "boolean",
           "default": false,
           "description": "是否章节内单词顺序随机"

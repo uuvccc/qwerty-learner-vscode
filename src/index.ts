@@ -7,11 +7,11 @@ import { soundPlayer } from './sound'
 import { voicePlayer } from './resource/voice'
 import PluginState from './utils/PluginState'
 
-const PLAY_VOICE_COMMAND = 'qwerty-learner.playVoice'
-const PREV_WORD_COMMAND = 'qwerty-learner.prevWord'
-const NEXT_WORD_COMMAND = 'qwerty-learner.nextWord'
-const TOGGLE_TRANSLATION_COMMAND = 'qwerty-learner.toggleTranslation'
-const TOGGLE_DIC_NAME_COMMAND = 'qwerty-learner.toggleDicName'
+const PLAY_VOICE_COMMAND = 'qwerty-learner-plus.playVoice'
+const PREV_WORD_COMMAND = 'qwerty-learner-plus.prevWord'
+const NEXT_WORD_COMMAND = 'qwerty-learner-plus.nextWord'
+const TOGGLE_TRANSLATION_COMMAND = 'qwerty-learner-plus.toggleTranslation'
+const TOGGLE_DIC_NAME_COMMAND = 'qwerty-learner-plus.toggleDicName'
 
 export function activate(context: vscode.ExtensionContext) {
   const pluginState = new PluginState(context)
@@ -88,12 +88,12 @@ export function activate(context: vscode.ExtensionContext) {
   })
 
   vscode.workspace.onDidChangeConfiguration((event) => {
-    if (event.affectsConfiguration('qwerty-learner.placeholder')) {
+    if (event.affectsConfiguration('qwerty-learner-plus.placeholder')) {
       pluginState.placeholder = getConfig('placeholder')
       initializeBar()
     }
 
-    if (event.affectsConfiguration('qwerty-learner.chapterLength')) {
+    if (event.affectsConfiguration('qwerty-learner-plus.chapterLength')) {
       pluginState.chapterLength = getConfig('chapterLength')
       initializeBar()
     }
@@ -102,7 +102,7 @@ export function activate(context: vscode.ExtensionContext) {
   // 注册 vscode commands
   context.subscriptions.push(
     ...[
-      vscode.commands.registerCommand('qwerty-learner.start', () => {
+      vscode.commands.registerCommand('qwerty-learner-plus.start', () => {
         pluginState.isStart = !pluginState.isStart
         if (pluginState.isStart) {
           initializeBar()
@@ -125,7 +125,7 @@ export function activate(context: vscode.ExtensionContext) {
           removeReadOnlyInterval()
         }
       }),
-      vscode.commands.registerCommand('qwerty-learner.changeChapter', async () => {
+      vscode.commands.registerCommand('qwerty-learner-plus.changeChapter', async () => {
         const inputChapter = await vscode.window.showQuickPick(
           range(1, pluginState.totalChapters + 1).map((i) => i.toString()),
           { placeHolder: `当前章节: ${pluginState.chapter + 1}   共 ${pluginState.totalChapters}章节` },
@@ -135,7 +135,7 @@ export function activate(context: vscode.ExtensionContext) {
           initializeBar()
         }
       }),
-      vscode.commands.registerCommand('qwerty-learner.changeDict', async () => {
+      vscode.commands.registerCommand('qwerty-learner-plus.changeDict', async () => {
         const dictList: DictPickItem[] = []
         dictionaries.forEach((dict) => {
           dictList.push({ label: dict.name, path: dict.url, detail: dict.description, key: dict.id })
@@ -146,11 +146,11 @@ export function activate(context: vscode.ExtensionContext) {
           initializeBar()
         }
       }),
-      vscode.commands.registerCommand('qwerty-learner.toggleWordVisibility', () => {
+      vscode.commands.registerCommand('qwerty-learner-plus.toggleWordVisibility', () => {
         pluginState.wordVisibility = !pluginState.wordVisibility
         initializeBar()
       }),
-      vscode.commands.registerCommand('qwerty-learner.toggleReadOnlyMode', () => {
+      vscode.commands.registerCommand('qwerty-learner-plus.toggleReadOnlyMode', () => {
         pluginState.readOnlyMode = !pluginState.readOnlyMode
         if (pluginState.readOnlyMode) {
           setUpReadOnlyInterval()
@@ -175,7 +175,7 @@ export function activate(context: vscode.ExtensionContext) {
         pluginState.nextWord()
         initializeBar()
       }),
-      vscode.commands.registerCommand('qwerty-learner.toggleChapterCycleMode', () => {
+      vscode.commands.registerCommand('qwerty-learner-plus.toggleChapterCycleMode', () => {
         pluginState.chapterCycleMode = !pluginState.chapterCycleMode
         if (pluginState.chapterCycleMode) {
           vscode.window.showInformationMessage('章节循环模式已开启')

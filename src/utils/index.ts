@@ -19,7 +19,7 @@ export function compareWord(word: string, input: string) {
 }
 
 export function getConfig(key: string) {
-  return vscode.workspace.getConfiguration('qwerty-learner')[key]
+  return vscode.workspace.getConfiguration('qwerty-learner-plus')[key]
 }
 
 export function getDictFile(dictPath: string) {
